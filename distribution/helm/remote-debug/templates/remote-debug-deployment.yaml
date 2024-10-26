@@ -1,0 +1,27 @@
+{{ if .Values.debug.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "remote-debug.fullname" . }}
+  labels:
+    {{- include "remote-debug.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "remote-debug.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "remote-debug.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "remote-debug.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "remote-debug:1.0-SNAPSHOT"
+          imagePullPolicy: "Never"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+{{ end }}
