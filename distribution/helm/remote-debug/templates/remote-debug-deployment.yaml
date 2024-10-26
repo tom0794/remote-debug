@@ -20,8 +20,11 @@ spec:
         - name: {{ .Chart.Name }}
           image: "remote-debug:1.0-SNAPSHOT"
           imagePullPolicy: "Never"
+          env:
+            - name: JAVA_OPTS
+              value: {{ .Values.debug.javaOpts }}
           ports:
-            - name: http
-              containerPort: 80
+            - name: debug
+              containerPort: {{ .Values.debug.port }}
               protocol: TCP
 {{ end }}

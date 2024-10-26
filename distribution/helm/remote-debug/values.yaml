@@ -1,5 +1,7 @@
 debug:
   enabled: true
+  javaOpts: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005"
+  port: 5005
 
 serviceAccount:
   create: false
