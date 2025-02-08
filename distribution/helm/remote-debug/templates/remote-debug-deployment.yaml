@@ -27,4 +27,11 @@ spec:
             - name: debug
               containerPort: {{ .Values.debug.port }}
               protocol: TCP
+          volumeMounts:
+            - name: my-volume
+              mountPath: /data
+      volumes:
+        - name: my-volume
+          persistentVolumeClaim:
+            claimName: "{{ .Values.pvName }}-{{ now | unixEpoch }}-pvc"
 {{ end }}

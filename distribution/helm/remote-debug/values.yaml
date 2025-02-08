@@ -5,3 +5,5 @@ debug:
 
 serviceAccount:
   create: false
+
+pvName: "pv-name"

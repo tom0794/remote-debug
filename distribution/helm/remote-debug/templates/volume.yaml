@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.pvName }}-{{ now | unixEpoch }}
+  # annotations:
+  #   "helm.sh/hook": "pre-install,pre-upgrade"
+  #   "helm.sh/hook-weight": "0"
+  #   "helm.sh/hook-delete-policy": "before-hook-creation"
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: /mnt/data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ .Values.pvName }}-{{ now | unixEpoch }}-pvc"
+  # annotations:
+  #   "helm.sh/hook": "pre-install,pre-upgrade"
+  #   "helm.sh/hook-weight": "0"
+  #   "helm.sh/hook-delete-policy": "before-hook-creation"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: manual
